@@ -8,6 +8,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from helpers.data_helpre import DataHelper
 from pages.manager_page import ManagerPage
 
 
@@ -86,3 +87,10 @@ def browser(request, logger) -> WebDriver:
 def manager_page(browser) -> ManagerPage:
     browser.get(f'{browser.url}/angularJs-protractor/BankingProject/#/manager')
     return ManagerPage(browser)
+
+
+@pytest.fixture()
+def setup_customer():
+    code = DataHelper.generate_post_code()
+    first_name = DataHelper.generate_first_name(code)
+    return {'code': code, 'first_name': first_name}

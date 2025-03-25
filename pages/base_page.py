@@ -78,3 +78,15 @@ class BasePage:
             self.logger.exception(f'Error: {e}')
             self.logger.exception('!!! Test failed !!!')
             raise
+
+    def get_alert_message(self):
+        try:
+            alert = self.browser.switch_to.alert
+            self.alert_message = alert.text
+        except Exception as e:
+            self.logger.error(f"Ошибка при работе с alert: {e}")
+            allure.attach(
+                name="failure_screenshot",
+                body=self.browser.get_screenshot_as_png(),
+                attachment_type=allure.attachment_type.PNG
+            )

@@ -1,5 +1,5 @@
 
 class AssertionHelper:
     @staticmethod
-    def assert_customer_creation():
-        pass
+    def assert_alert_message(actual, excepted):
+        assert actual, excepted

@@ -26,3 +26,15 @@ class ManagerPage(BasePage):
 
     def click_add_customer_submit_button(self):
         self.get_element(Selectors.BUTTON_CONFIRM_ADD_CUSTOMER).click()
+
+    def click_customers_menu_button(self):
+        self.get_element(Selectors.BUTTON_MENU_CUSTOMERS).click()
+
+    def click_twice_first_name_column(self):
+        self.get_element(Selectors.COLUMN_FIRST_NAME).click()
+        self.get_element(Selectors.COLUMN_FIRST_NAME).click()
+
+    def get_customers_name(self):
+        customers_name_elements = self.get_elements(Selectors.CUSTOMER_NAME)
+        self.actual_customers_name = [element.text for element in customers_name_elements]
+        self.sorted_customer_name = sorted(self.actual_customers_name)

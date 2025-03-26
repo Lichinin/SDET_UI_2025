@@ -13,3 +13,14 @@ def test_form_filling(manager_page, setup_customer):
         page.alert_message,
         'Customer added successfully with customer id :6'
     )
+
+
+def test_customers_sort_by_name(manager_page):
+    page = manager_page
+    page.click_customers_menu_button()
+    page.click_twice_first_name_column()
+    page.get_customers_name()
+    AssertionHelper.assert_sorting_by_name(
+        page.actual_customers_name,
+        page.sorted_customer_name
+    )

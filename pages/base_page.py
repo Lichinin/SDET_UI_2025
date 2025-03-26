@@ -28,6 +28,23 @@ class BasePage:
             self.logger.exception('Error: element not found!')
             raise
 
+    @allure.step('Поиск нескольких элементов на странице')
+    def get_elements(self, locator: tuple, timeout=3):
+        with allure.step(f'Поиск элементов "{locator}"'):
+            try:
+                self.browser.logger.info(f'* Get elements {repr(locator)}')
+                return WebDriverWait(self.browser, timeout).until(
+                    EC.visibility_of_all_elements_located(locator)
+                )
+            except Exception:
+                allure.attach(
+                    name="failure_screenshot",
+                    body=self.browser.get_screenshot_as_png(),
+                    attachment_type=allure.attachment_type.PNG
+                )
+            self.logger.exception('Error: elements not found!')
+            raise
+
     @allure.step('Прокрутка страницы до элемента')
     def scroll_to_element(self, element):
         try:

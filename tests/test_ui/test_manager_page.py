@@ -32,4 +32,8 @@ def test_customer_delete(manager_page):
     page.get_customers_name()
     page.choice_customer_to_delete(page.actual_customers_name)
     page.click_delete_button(page.name_to_delete)
-    AssertionHelper.assert_alert_message()
+    page.get_customers_name()
+    AssertionHelper.assert_customer_delition(
+        page.actual_customers_name,
+        page.name_to_delete
+    )

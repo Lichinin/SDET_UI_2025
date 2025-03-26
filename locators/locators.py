@@ -13,3 +13,4 @@ class Selectors:
     BUTTON_MENU_CUSTOMERS = (By.CSS_SELECTOR, 'button[ng-click="showCust()"]')
     COLUMN_FIRST_NAME = (By.CSS_SELECTOR, 'a[ng-click="sortType = \'fName\'; sortReverse = !sortReverse"]')
     CUSTOMER_NAME = (By.CSS_SELECTOR, 'tr.ng-scope td:nth-child(1)')
+    BUTTON_DELETE_CUSTOMER = (By.XPATH, f'//tr[contains(@class, "ng-scope") and .//td[text()=Harry"]]//button[text()="Delete"]')

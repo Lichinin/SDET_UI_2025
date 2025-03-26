@@ -1,7 +1,7 @@
 from helpers.assertion_helper import AssertionHelper
 
 
-def test_form_filling(manager_page, setup_customer):
+def test_customer_add(manager_page, setup_customer):
     page = manager_page
     page.click_add_customer_menu_button()
     page.fill_first_name_field(setup_customer['first_name'])
@@ -24,3 +24,12 @@ def test_customers_sort_by_name(manager_page):
         page.actual_customers_name,
         page.sorted_customer_name
     )
+
+
+def test_customer_delete(manager_page):
+    page = manager_page
+    page.click_customers_menu_button()
+    page.get_customers_name()
+    page.choice_customer_to_delete(page.actual_customers_name)
+    page.click_delete_button(page.name_to_delete)
+    AssertionHelper.assert_alert_message()

@@ -1,5 +1,7 @@
 import allure
+from selenium.webdriver.common.by import By
 
+from helpers.data_helpre import DataHelper
 from locators.locators import Selectors
 from pages.base_page import BasePage
 
@@ -38,3 +40,9 @@ class ManagerPage(BasePage):
         customers_name_elements = self.get_elements(Selectors.CUSTOMER_NAME)
         self.actual_customers_name = [element.text for element in customers_name_elements]
         self.sorted_customer_name = sorted(self.actual_customers_name)
+
+    def choice_customer_to_delete(self, customers_name):
+        self.name_to_delete = DataHelper.choice_name_to_delete(customers_name)
+
+    def click_delete_button(self, name_to_delete):
+        self.get_element((By.XPATH, f'//tr[contains(@class, "ng-scope") and .//td[text()="{name_to_delete}"]]//button[text()="Delete"]')).click()

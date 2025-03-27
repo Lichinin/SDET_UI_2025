@@ -96,6 +96,7 @@ class BasePage:
             self.logger.exception('!!! Test failed !!!')
             raise
 
+    @allure.step('Получаю текст aller')
     def get_alert_message(self):
         try:
             alert = self.browser.switch_to.alert

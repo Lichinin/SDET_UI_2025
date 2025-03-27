@@ -1,13 +1,32 @@
+import allure
+
 
 class AssertionHelper:
     @staticmethod
-    def assert_alert_message(actual, excepted):
-        assert actual, excepted
+    @allure.step('Проверить равенство значений')
+    def assert_equals(logger, expected, actual):
+        logger.info('* Check assertion')
+        try:
+            assert expected == actual, (
+                f"Expected: '{expected}', Actual: '{actual}'"
+            )
+            logger.info('*** Test completed successful ***')
+        except AssertionError as e:
+            logger.exception(e)
+            logger.info('!!! Test failed !!!')
+            raise
+
 
     @staticmethod
-    def assert_sorting_by_name(actual, excepted):
-        assert actual, excepted
-
-    @staticmethod
-    def assert_customer_delition(customers, deleted_customer):
-        assert deleted_customer not in customers
+    @allure.step('Проверить вхождение элемента в список')
+    def assert_entry(logger, list, value):
+        logger.info('* Check assertion')
+        try:
+            assert value not in  list, (
+                f'"{value}" must not be in "{list}"'
+            )
+            logger.info('*** Test completed successful ***')
+        except AssertionError as e:
+            logger.exception(e)
+            logger.info('!!! Test failed !!!')
+            raise

@@ -11,7 +11,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    container:
+      image: selenium/standalone-firefox:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

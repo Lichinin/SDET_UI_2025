@@ -63,6 +63,7 @@ def browser(request, logger) -> WebDriver:
     elif browser_name == 'firefox':
         options = FirefoxOptions()
         options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--headless')
         options.page_load_strategy = 'eager'
         driver = webdriver.Firefox(options=options)
     elif browser_name == 'edge':

@@ -8,7 +8,7 @@ from helpers.assertion_helper import AssertionHelper
 @allure.suite('UI tests')
 @allure.title('Тест добавления Customer')
 @allure.description('Проверка создания нового Customer и сообщения об успешном создании.')
-def test_customer_add(manager_page, setup_customer):
+def test_customer_add(manager_page, setup_customer, teardown_customer):
     page = manager_page
     page.click_add_customer_menu_button()
     page.fill_first_name_field(setup_customer['first_name'])

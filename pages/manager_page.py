@@ -61,3 +61,9 @@ class ManagerPage(BasePage):
             Selectors.BUTTON_DELETE_CUSTOMER[1].format(name=name_to_delete)
         )
         self.get_element(locator).click()
+
+    @allure.step('Заполнить поле "Post Code"')
+    def fill_search_field(self, name):
+        field = self.get_element(Selectors.FIELD_SEARCH_CUSTOMER)
+        self.click_and_clear(field)
+        field.send_keys(name)

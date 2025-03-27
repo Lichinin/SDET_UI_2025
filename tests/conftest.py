@@ -94,3 +94,14 @@ def setup_customer():
     code = DataHelper.generate_post_code()
     first_name = DataHelper.generate_first_name(code)
     return {'code': code, 'first_name': first_name}
+
+
+@pytest.fixture()
+def teardown_customer(manager_page, setup_customer):
+    yield
+    page = manager_page
+    alert = page.browser.switch_to.alert
+    alert.accept()
+    page.click_customers_menu_button()
+    page.fill_search_field(setup_customer['first_name'])
+    page.click_delete_button(setup_customer['first_name'])

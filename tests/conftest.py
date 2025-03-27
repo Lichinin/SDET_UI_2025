@@ -17,7 +17,7 @@ from pages.manager_page import ManagerPage
 
 
 def pytest_addoption(parser):
-    parser.addoption('--browser', action='store', default='firefox')
+    parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--url', action='store', default='https://www.globalsqa.com')
     parser.addoption('--log_level', action='store', default="INFO")
     parser.addoption('--browser_version', action='store')
@@ -57,6 +57,7 @@ def browser(request, logger) -> WebDriver:
 
     if browser_name == 'chrome':
         options = ChromeOptions()
+        options.add_argument('--headless')
         options.add_argument('--ignore-certificate-errors')
         options.page_load_strategy = 'eager'
         driver = webdriver.Chrome(options=options)

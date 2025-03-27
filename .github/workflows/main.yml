@@ -24,7 +24,10 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y firefox
+        sudo apt-get install -y firefox libdbus-glib-1-2
+
+        sudo rm -f /usr/local/bin/geckodriver
+        sudo rm -f /snap/bin/geckodriver
 
     - name: Install latest GeckoDriver
       run: |
@@ -33,7 +36,7 @@ jobs:
         tar -xvzf geckodriver-*
         chmod +x geckodriver
         sudo mv geckodriver /usr/local/bin/
-        geckodriver --version
+        echo "GeckoDriver version: $(geckodriver --version)"
 
     - name: Install Python dependencies
       run: |
@@ -42,4 +45,8 @@ jobs:
 
     - name: Run tests
       run: |
+        export PATH="/usr/lib/firefox:$PATH"
+        echo "Firefox path: $(which firefox)"
+        echo "Firefox version: $(firefox --version)"
+        echo "GeckoDriver path: $(which geckodriver)
         pytest

@@ -194,7 +194,10 @@ INFO ===> Test test_customers_sort_by_name finished at 2025-03-28 00:38:02.27633
 
 ### Примеры отчетности Allure.
 * Summary по тестам:
+![image](https://github.com/user-attachments/assets/2e3a7679-4ec0-45e9-b21d-16068ed31c36)
 
 * Тесткейсы:
+![image](https://github.com/user-attachments/assets/bce36cd9-1986-4ae2-a471-068b855ab539)
 
 * Пример отчета по тесткейсу:
+![image](https://github.com/user-attachments/assets/9492ddbc-fe7f-48ac-9f0e-6549931f5d8a)

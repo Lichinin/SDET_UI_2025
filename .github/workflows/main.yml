@@ -37,6 +37,12 @@ jobs:
           . venv/bin/activate
           pip install -r requirements.txt
 
+      - name: Download GeckoDriver
+        run: |
+          curl -L https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux64.tar.gz -o geckodriver.tar.gz
+          tar -xzf geckodriver.tar.gz
+          chmod +x geckodriver
+          mv geckodriver /usr/local/bin/
       - name: Run tests
         run: |
           . venv/bin/activate

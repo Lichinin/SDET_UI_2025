@@ -62,7 +62,7 @@ class ManagerPage(BasePage):
         )
         self.get_element(locator).click()
 
-    @allure.step('Заполнить поле "Post Code"')
+    @allure.step('Заполнить поле "Search"')
     def fill_search_field(self, name):
         field = self.get_element(Selectors.FIELD_SEARCH_CUSTOMER)
         self.click_and_clear(field)

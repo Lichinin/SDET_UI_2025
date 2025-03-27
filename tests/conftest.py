@@ -6,7 +6,11 @@ from pathlib import Path
 
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.remote.webdriver import WebDriver
+
 
 from helpers.data_helper import DataHelper
 from pages.manager_page import ManagerPage
@@ -52,22 +56,18 @@ def browser(request, logger) -> WebDriver:
     url = request.config.getoption('--url')
 
     if browser_name == 'chrome':
-        options = webdriver.ChromeOptions()
-        # options.add_argument("--headless=new")
+        options = ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
         options.page_load_strategy = 'eager'
         driver = webdriver.Chrome(options=options)
     elif browser_name == 'firefox':
-        options = webdriver.FirefoxOptions()
-        options.add_argument("--start-maximized")
+        options = FirefoxOptions()
+        options.add_argument('--ignore-certificate-errors')
         options.page_load_strategy = 'eager'
-        # options.add_argument("--headless")
         driver = webdriver.Firefox(options=options)
-        # driver.fullscreen_window()
     elif browser_name == 'edge':
-        options = webdriver.EdgeOptions()
-        options.use_chromium = True
-        options.add_argument("--headless=new")
+        options = EdgeOptions()
+        options.page_load_strategy = 'eager'
         driver = webdriver.Edge(options=options)
     else:
         raise ValueError(

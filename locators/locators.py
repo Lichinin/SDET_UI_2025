@@ -11,6 +11,12 @@ class Selectors:
     FIELD_POST_CODE = (By.CSS_SELECTOR, 'input[ng-model="postCd"]')
     BUTTON_CONFIRM_ADD_CUSTOMER = (By.CSS_SELECTOR, 'button[type="submit"]')
     BUTTON_MENU_CUSTOMERS = (By.CSS_SELECTOR, 'button[ng-click="showCust()"]')
-    COLUMN_FIRST_NAME = (By.CSS_SELECTOR, 'a[ng-click="sortType = \'fName\'; sortReverse = !sortReverse"]')
+    COLUMN_FIRST_NAME = (
+        By.CSS_SELECTOR,
+        'a[ng-click="sortType = \'fName\'; sortReverse = !sortReverse"]'
+    )
     CUSTOMER_NAME = (By.CSS_SELECTOR, 'tr.ng-scope td:nth-child(1)')
-    BUTTON_DELETE_CUSTOMER = (By.XPATH, f'//tr[contains(@class, "ng-scope") and .//td[text()=Harry"]]//button[text()="Delete"]')
+    BUTTON_DELETE_CUSTOMER = (
+        By.XPATH,
+        '//tr[contains(@class, "ng-scope") and .//td[text()="{name}"]]//button[text()="Delete"]'
+    )

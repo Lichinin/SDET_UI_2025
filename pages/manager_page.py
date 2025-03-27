@@ -1,7 +1,6 @@
 import allure
-from selenium.webdriver.common.by import By
 
-from helpers.data_helpre import DataHelper
+from helpers.data_helper import DataHelper
 from locators.locators import Selectors
 from pages.base_page import BasePage
 
@@ -46,7 +45,9 @@ class ManagerPage(BasePage):
     @allure.step('Получить имена всех Customers')
     def get_customers_name(self):
         customers_name_elements = self.get_elements(Selectors.CUSTOMER_NAME)
-        self.actual_customers_name = [element.text for element in customers_name_elements]
+        self.actual_customers_name = [
+            element.text for element in customers_name_elements
+        ]
         self.sorted_customer_name = sorted(self.actual_customers_name)
 
     @allure.step('Выбрать пользователя для удаления')
@@ -55,4 +56,8 @@ class ManagerPage(BasePage):
 
     @allure.step('Нажать кнопку "Delete"')
     def click_delete_button(self, name_to_delete):
-        self.get_element((By.XPATH, f'//tr[contains(@class, "ng-scope") and .//td[text()="{name_to_delete}"]]//button[text()="Delete"]')).click()
+        locator = (
+            Selectors.BUTTON_DELETE_CUSTOMER[0],
+            Selectors.BUTTON_DELETE_CUSTOMER[1].format(name=name_to_delete)
+        )
+        self.get_element(locator).click()

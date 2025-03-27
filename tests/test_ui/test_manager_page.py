@@ -1,5 +1,6 @@
 import allure
 
+from constants.constants import Constants
 from helpers.assertion_helper import AssertionHelper
 
 
@@ -18,7 +19,7 @@ def test_customer_add(manager_page, setup_customer):
     AssertionHelper.assert_equals(
         page.logger,
         page.alert_message,
-        'Customer added successfully with customer id :6'
+        Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
     )
 
 

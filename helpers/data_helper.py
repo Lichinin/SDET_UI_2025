@@ -26,6 +26,13 @@ class DataHelper:
     @allure.step('Выбор пользователя для удаления на основе расчетов')
     def choice_name_to_delete(name_list):
         customers_name_lenght = {name: len(name) for name in name_list}
-        average_lenght = sum(customers_name_lenght.values()) / len(customers_name_lenght)
-        closest_name = min(customers_name_lenght.keys(), key=lambda name: abs(customers_name_lenght[name] - average_lenght))
+        average_lenght = (
+            sum(customers_name_lenght.values()) / len(customers_name_lenght)
+        )
+        closest_name = (
+            min(customers_name_lenght.keys(),
+                key=lambda name: abs(
+                    customers_name_lenght[name] - average_lenght
+                ))
+        )
         return closest_name

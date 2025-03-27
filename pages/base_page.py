@@ -78,24 +78,6 @@ class BasePage:
             )
             self.logger.exception('Error: cannot click and clear!')
 
-    @allure.step('Проверка равенства значений')
-    def assert_equals(self, expected, actual):
-        self.logger.info('* Check assertion assert_equals')
-        try:
-            assert expected == actual, (
-                f"Expected: '{expected}', Actual: '{actual}'"
-            )
-            self.logger.info('*** Test completed successful ***')
-        except AssertionError as e:
-            allure.attach(
-                name="failure_screenshot",
-                body=self.browser.get_screenshot_as_png(),
-                attachment_type=allure.attachment_type.PNG
-            )
-            self.logger.exception(f'Error: {e}')
-            self.logger.exception('!!! Test failed !!!')
-            raise
-
     @allure.step('Получаю текст aller')
     def get_alert_message(self):
         try:

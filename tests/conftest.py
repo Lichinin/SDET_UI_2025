@@ -8,7 +8,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from helpers.data_helpre import DataHelper
+from helpers.data_helper import DataHelper
 from pages.manager_page import ManagerPage
 
 
@@ -21,7 +21,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope='function')
 def logger(request):
-    log_dir = Path(__file__).parent / 'log'
+    log_dir = Path(__file__).parent.parent / 'log'
     log_dir.mkdir(exist_ok=True)
     log_level = request.config.getoption('--log_level')
     browser_name = request.config.getoption('--browser')

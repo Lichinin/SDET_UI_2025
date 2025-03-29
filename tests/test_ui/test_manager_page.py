@@ -1,6 +1,7 @@
 import allure
 
 from constants.constants import Constants
+from helpers.data_helper import DataHelper
 
 
 @allure.epic('SimbirSoft SDET practicum')
@@ -36,8 +37,8 @@ def test_customers_sort_by_name(manager_page):
 def test_customer_delete(manager_page):
     manager_page.click_customers_menu_button()
     manager_page.get_customers_name()
-    manager_page.choice_customer_to_delete(manager_page.actual_customers_name)
-    manager_page.click_delete_button(manager_page.name_to_delete)
+    customer_to_delete = DataHelper.choice_name_to_delete(manager_page.actual_customers_name)
+    manager_page.click_delete_button(customer_to_delete)
     manager_page.get_customers_name()
     with allure.step('Проверка отсутствия удаленного Customer в списке'):
-        assert manager_page.name_to_delete not in manager_page.actual_customers_name
+        assert customer_to_delete not in manager_page.actual_customers_name

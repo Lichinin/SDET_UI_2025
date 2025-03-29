@@ -69,10 +69,6 @@ class ManagerPage(BasePage):
         ]
         self.sorted_customer_name = sorted(self.actual_customers_name)
 
-    @allure.step('Выбрать пользователя для удаления')
-    def choice_customer_to_delete(self, customers_name):
-        self.name_to_delete = DataHelper.choice_name_to_delete(customers_name)
-
     @allure.step('Нажать кнопку "Delete"')
     def click_delete_button(self, name_to_delete):
         locator = (

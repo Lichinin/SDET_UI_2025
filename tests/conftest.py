@@ -91,23 +91,20 @@ def manager_page(browser) -> ManagerPage:
 
 
 @pytest.fixture()
-def setup_customer():
+def customer_data(manager_page):
     code = DataHelper.generate_post_code()
     first_name = DataHelper.generate_first_name(code)
     last_name = DataHelper.generate_last_name()
-    return {
+    customer = {
         'code': code,
         'first_name': first_name,
         'last_name': last_name
     }
 
+    yield customer
 
-@pytest.fixture()
-def teardown_customer(manager_page, setup_customer):
-    yield
-    page = manager_page
-    alert = page.browser.switch_to.alert
+    alert = manager_page.browser.switch_to.alert
     alert.accept()
-    page.click_customers_menu_button()
-    page.fill_search_field(setup_customer['first_name'])
-    page.click_delete_button(setup_customer['first_name'])
+    manager_page.click_customers_menu_button()
+    manager_page.fill_search_field(customer['first_name'])
+    manager_page.click_delete_button(customer['first_name'])

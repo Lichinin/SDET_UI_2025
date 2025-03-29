@@ -8,11 +8,11 @@ from helpers.data_helper import DataHelper
 @allure.suite('UI tests')
 @allure.title('Тест добавления Customer')
 @allure.description('Проверка создания нового Customer и сообщения об успешном создании.')
-def test_customer_add(manager_page, setup_customer, teardown_customer):
+def test_customer_add(manager_page, customer_data):
     manager_page.click_add_customer_menu_button()
-    manager_page.fill_first_name_field(setup_customer['first_name'])
-    manager_page.fill_last_name_field(setup_customer['last_name'])
-    manager_page.fill_post_code_field(setup_customer['code'])
+    manager_page.fill_first_name_field(customer_data['first_name'])
+    manager_page.fill_last_name_field(customer_data['last_name'])
+    manager_page.fill_post_code_field(customer_data['code'])
     manager_page.click_add_customer_submit_button()
     with allure.step('Проверка сообщения о создании пользователя'):
         assert manager_page.get_alert_message(), Constants.EXPECTED_CUSTOMER_ADD_MESSAGE

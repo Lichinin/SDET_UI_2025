@@ -13,9 +13,8 @@ def test_customer_add(manager_page, setup_customer, teardown_customer):
     manager_page.fill_last_name_field(setup_customer['last_name'])
     manager_page.fill_post_code_field(setup_customer['code'])
     manager_page.click_add_customer_submit_button()
-    manager_page.get_alert_message()
     with allure.step('Проверка сообщения о создании пользователя'):
-        assert manager_page.alert_message, Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
+        assert manager_page.get_alert_message(), Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
 
 
 @allure.epic('SimbirSoft SDET practicum')

@@ -1,8 +1,8 @@
-import time
-
 import allure
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+from config import Timeouts
 
 
 class BasePage:
@@ -12,7 +12,11 @@ class BasePage:
         self.logger = browser.logger
 
     @allure.step('Поиск элемента на странице')
-    def get_element(self, locator: tuple, timeout=3):
+    def get_element(
+        self,
+        locator: tuple,
+        timeout=Timeouts.ELEMENT_VISIBILITY
+    ):
         with allure.step(f'Поиск элемента "{locator}"'):
             try:
                 self.browser.logger.info(f'* Get element "{repr(locator)}"')
@@ -29,7 +33,11 @@ class BasePage:
             raise
 
     @allure.step('Поиск нескольких элементов на странице')
-    def get_elements(self, locator: tuple, timeout=3):
+    def get_elements(
+        self,
+        locator: tuple,
+        timeout=Timeouts.ELEMENT_VISIBILITY
+    ):
         with allure.step(f'Поиск элементов "{locator}"'):
             try:
                 self.browser.logger.info(f'* Get elements {repr(locator)}')

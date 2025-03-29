@@ -1,7 +1,6 @@
 import allure
 
 from constants.constants import Constants
-from helpers.assertion_helper import AssertionHelper
 
 
 @allure.epic('SimbirSoft SDET practicum')
@@ -18,7 +17,6 @@ def test_customer_add(manager_page, setup_customer, teardown_customer):
     page.get_alert_message()
     with allure.step('Проверка сообщения о создании пользователя'):
         assert page.alert_message, Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
-
 
 
 @allure.epic('SimbirSoft SDET practicum')

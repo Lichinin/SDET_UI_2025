@@ -36,19 +36,16 @@ class ManagerPage(BasePage):
     @allure.step('Заполнить поле "First Name"')
     def fill_first_name_field(self, first_name):
         field = self.get_element(self.FIELD_FIRST_NAME)
-        self.click_and_clear(field)
         field.send_keys(first_name)
 
     @allure.step('Заполнить поле "Last Name"')
     def fill_last_name_field(self, last_name):
         field = self.get_element(self.FIELD_LAST_NAME)
-        self.click_and_clear(field)
         field.send_keys(last_name)
 
     @allure.step('Заполнить поле "Post Code"')
     def fill_post_code_field(self, code):
         field = self.get_element(self.FIELD_POST_CODE)
-        self.click_and_clear(field)
         field.send_keys(code)
 
     @allure.step('Нажать кнопку "Add Customer" под формой')
@@ -87,5 +84,4 @@ class ManagerPage(BasePage):
     @allure.step('Заполнить поле "Search"')
     def fill_search_field(self, name):
         field = self.get_element(self.FIELD_SEARCH_CUSTOMER)
-        self.click_and_clear(field)
         field.send_keys(name)

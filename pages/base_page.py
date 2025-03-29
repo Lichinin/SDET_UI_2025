@@ -45,23 +45,6 @@ class BasePage:
             self.logger.exception('Error: elements not found!')
             raise
 
-    @allure.step('Прокрутка страницы до элемента')
-    def scroll_to_element(self, element):
-        try:
-            self.browser.execute_script(
-                "arguments[0].scrollIntoView({block: 'center'});",
-                element
-            )
-            time.sleep(0.5)
-        except Exception as e:
-            allure.attach(
-                name="failure_screenshot",
-                body=self.browser.get_screenshot_as_png(),
-                attachment_type=allure.attachment_type.PNG
-            )
-            self.logger.error(f'Ошибка прокрутки элемента: {e}')
-            raise
-
     @allure.step('Получаю текст allert')
     def get_alert_message(self):
         alert = self.browser.switch_to.alert

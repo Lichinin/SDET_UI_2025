@@ -94,7 +94,12 @@ def manager_page(browser) -> ManagerPage:
 def setup_customer():
     code = DataHelper.generate_post_code()
     first_name = DataHelper.generate_first_name(code)
-    return {'code': code, 'first_name': first_name}
+    last_name = DataHelper.generate_last_name()
+    return {
+        'code': code,
+        'first_name': first_name,
+        'last_name': last_name
+    }
 
 
 @pytest.fixture()

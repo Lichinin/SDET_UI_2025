@@ -40,10 +40,10 @@ class ManagerPage(BasePage):
         field.send_keys(first_name)
 
     @allure.step('Заполнить поле "Last Name"')
-    def fill_last_name_field(self):
+    def fill_last_name_field(self, last_name):
         field = self.get_element(self.FIELD_LAST_NAME)
         self.click_and_clear(field)
-        field.send_keys('lname')
+        field.send_keys(last_name)
 
     @allure.step('Заполнить поле "Post Code"')
     def fill_post_code_field(self, code):

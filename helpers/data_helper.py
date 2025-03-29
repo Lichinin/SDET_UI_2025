@@ -23,6 +23,11 @@ class DataHelper:
         return ''.join(result)
 
     @staticmethod
+    @allure.step('Генерация last_name')
+    def generate_last_name():
+        return fake.last_name()
+
+    @staticmethod
     @allure.step('Выбор пользователя для удаления на основе расчетов')
     def choice_name_to_delete(name_list):
         customers_name_lenght = {name: len(name) for name in name_list}

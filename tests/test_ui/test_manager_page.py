@@ -10,7 +10,7 @@ from constants.constants import Constants
 def test_customer_add(manager_page, setup_customer, teardown_customer):
     manager_page.click_add_customer_menu_button()
     manager_page.fill_first_name_field(setup_customer['first_name'])
-    manager_page.fill_last_name_field()
+    manager_page.fill_last_name_field(setup_customer['last_name'])
     manager_page.fill_post_code_field(setup_customer['code'])
     manager_page.click_add_customer_submit_button()
     manager_page.get_alert_message()

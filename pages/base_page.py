@@ -21,7 +21,8 @@ class BasePage:
             try:
                 self.browser.logger.info(f'* Get element "{repr(locator)}"')
                 return WebDriverWait(self.browser, timeout).until(
-                    EC.visibility_of_element_located(locator)
+                    EC.visibility_of_element_located(locator),
+                    message='Не удалось найти {locator} за {timeout} секунд'
                 )
             except Exception:
                 allure.attach(
@@ -42,7 +43,8 @@ class BasePage:
             try:
                 self.browser.logger.info(f'* Get elements {repr(locator)}')
                 return WebDriverWait(self.browser, timeout).until(
-                    EC.visibility_of_all_elements_located(locator)
+                    EC.visibility_of_all_elements_located(locator),
+                    message='Не удалось найти {locator} за {timeout} секунд'
                 )
             except Exception:
                 allure.attach(

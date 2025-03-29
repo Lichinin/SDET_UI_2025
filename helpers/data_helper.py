@@ -1,6 +1,8 @@
 import allure
 from faker import Faker
 
+from constants.constants import Constants
+
 fake = Faker()
 
 
@@ -16,8 +18,8 @@ class DataHelper:
         pairs = [int(str(code)[i:i+2]) for i in range(0, len(str(code)), 2)]
         result = []
         for number in pairs:
-            letter_index = number % 26
-            letter = chr(letter_index + 97)
+            letter_index = number % Constants.ALPHABET_SIZE
+            letter = chr(letter_index + Constants.ASCII_LOWERCASE_A)
             result.append(letter)
 
         return ''.join(result)

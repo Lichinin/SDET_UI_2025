@@ -1,8 +1,8 @@
 import allure
+from selenium.webdriver.common.by import By
 
 from helpers.data_helper import DataHelper
 from pages.base_page import BasePage
-from selenium.webdriver.common.by import By
 
 
 class ManagerPage(BasePage):

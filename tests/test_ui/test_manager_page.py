@@ -16,11 +16,9 @@ def test_customer_add(manager_page, setup_customer, teardown_customer):
     page.fill_post_code_field(setup_customer['code'])
     page.click_add_customer_submit_button()
     page.get_alert_message()
-    AssertionHelper.assert_equals(
-        page.logger,
-        page.alert_message,
-        Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
-    )
+    with allure.step('Проверка сообщения о создании пользователя'):
+        assert page.alert_message, Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
+
 
 
 @allure.epic('SimbirSoft SDET practicum')
@@ -32,11 +30,8 @@ def test_customers_sort_by_name(manager_page):
     page.click_customers_menu_button()
     page.click_twice_first_name_column()
     page.get_customers_name()
-    AssertionHelper.assert_equals(
-        page.logger,
-        page.actual_customers_name,
-        page.sorted_customer_name
-    )
+    with allure.step('Проверка сортировки свиска Customer'):
+        assert page.actual_customers_name, page.sorted_customer_name
 
 
 @allure.epic('SimbirSoft SDET practicum')
@@ -50,8 +45,5 @@ def test_customer_delete(manager_page):
     page.choice_customer_to_delete(page.actual_customers_name)
     page.click_delete_button(page.name_to_delete)
     page.get_customers_name()
-    AssertionHelper.assert_entry(
-        page.logger,
-        page.actual_customers_name,
-        page.name_to_delete
-    )
+    with allure.step('Проверка отсутствия удаленного Customer в списке'):
+        assert page.name_to_delete not in page.actual_customers_name

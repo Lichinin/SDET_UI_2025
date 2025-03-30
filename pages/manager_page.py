@@ -21,7 +21,7 @@ class ManagerPage(BasePage):
     BUTTON_MENU_CUSTOMERS = (By.CSS_SELECTOR, 'button[ng-click="showCust()"]')
     COLUMN_FIRST_NAME = (
         By.CSS_SELECTOR,
-        'a[ng-click="sortType = \'fName\'; sortReverse = !sortReverse"]'
+        'a[ng-click^="sortType = \'fName\'"]'
     )
     CUSTOMER_NAME = (By.CSS_SELECTOR, 'tr.ng-scope td:nth-child(1)')
     BUTTON_DELETE_CUSTOMER = (

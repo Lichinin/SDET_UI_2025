@@ -32,14 +32,14 @@ class DataHelper:
     @staticmethod
     @allure.step('Выбор пользователя для удаления на основе расчетов')
     def choice_name_to_delete(name_list):
-        customers_name_lenght = {name: len(name) for name in name_list}
-        average_lenght = (
-            sum(customers_name_lenght.values()) / len(customers_name_lenght)
+        customers_name_length = {name: len(name) for name in name_list}
+        average_length = (
+            sum(customers_name_length.values()) / len(customers_name_length)
         )
         closest_name = (
-            min(customers_name_lenght.keys(),
+            min(customers_name_length.keys(),
                 key=lambda name: abs(
-                    customers_name_lenght[name] - average_lenght
+                    customers_name_length[name] - average_length
                 ))
         )
         return closest_name

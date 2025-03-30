@@ -17,7 +17,7 @@ from pages.manager_page import ManagerPage
 
 
 def pytest_addoption(parser):
-    parser.addoption('--browser', action='store', default='firefox')
+    parser.addoption('--browser', action='store', default='chrome')
     parser.addoption('--url', action='store', default=Urls.BASE_URL)
     parser.addoption('--log_level', action='store', default="INFO")
     parser.addoption('--browser_version', action='store')

@@ -107,4 +107,4 @@ def customer_data(manager_page):
     alert.accept()
     manager_page.click_customers_menu_button()
     manager_page.fill_search_field(customer['first_name'])
-    manager_page.click_delete_button(customer['first_name'])
+    manager_page.click_delete_button()

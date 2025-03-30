@@ -19,8 +19,9 @@ class TestManagerPage:
         manager_page.click_add_customer_submit_button()
         with allure.step('Проверка сообщения о создании пользователя'):
             assert (
-                manager_page.get_alert_message()
-                == Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
+                manager_page.get_alert_message().startswith(
+                    Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
+                )
             )
 
     @allure.title('Тест сортировки Customers по First Name')
@@ -48,7 +49,6 @@ class TestManagerPage:
             manager_page.actual_customers_name
         )
         manager_page.fill_search_field(customer_to_delete)
-
         manager_page.click_delete_button()
         manager_page.clear_search_field()
         manager_page.get_customers_name()

@@ -3,6 +3,7 @@ import logging
 import logging.handlers
 from logging.handlers import RotatingFileHandler
 
+import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -111,3 +112,18 @@ def customer_data(manager_page):
         customer['first_name']
     )
     manager_page.click_delete_button()
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == "call" and report.failed:
+        browser = item.funcargs.get('browser')
+        if browser:
+            allure.attach(
+                browser.get_screenshot_as_png(),
+                name="screenshot_on_failure",
+                attachment_type=allure.attachment_type.PNG
+            )

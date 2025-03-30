@@ -18,20 +18,11 @@ class BasePage:
         timeout=Timeouts.ELEMENT_VISIBILITY
     ):
         with allure.step(f'Поиск элемента "{locator}"'):
-            try:
-                self.browser.logger.info(f'* Get element "{repr(locator)}"')
-                return WebDriverWait(self.browser, timeout).until(
-                    EC.visibility_of_element_located(locator),
-                    message='Не удалось найти {locator} за {timeout} секунд'
-                )
-            except Exception:
-                allure.attach(
-                    name="failure_screenshot",
-                    body=self.browser.get_screenshot_as_png(),
-                    attachment_type=allure.attachment_type.PNG
-                )
-            self.logger.exception('Error: element not found!')
-            raise
+            self.browser.logger.info(f'* Get element "{repr(locator)}"')
+            return WebDriverWait(self.browser, timeout).until(
+                EC.visibility_of_element_located(locator),
+                message='Не удалось найти {locator} за {timeout} секунд'
+            )
 
     @allure.step('Поиск нескольких элементов на странице')
     def get_elements(
@@ -40,20 +31,11 @@ class BasePage:
         timeout=Timeouts.ELEMENT_VISIBILITY
     ):
         with allure.step(f'Поиск элементов "{locator}"'):
-            try:
-                self.browser.logger.info(f'* Get elements {repr(locator)}')
-                return WebDriverWait(self.browser, timeout).until(
-                    EC.visibility_of_all_elements_located(locator),
-                    message='Не удалось найти {locator} за {timeout} секунд'
-                )
-            except Exception:
-                allure.attach(
-                    name="failure_screenshot",
-                    body=self.browser.get_screenshot_as_png(),
-                    attachment_type=allure.attachment_type.PNG
-                )
-            self.logger.exception('Error: elements not found!')
-            raise
+            self.browser.logger.info(f'* Get elements {repr(locator)}')
+            return WebDriverWait(self.browser, timeout).until(
+                EC.visibility_of_all_elements_located(locator),
+                message='Не удалось найти {locator} за {timeout} секунд'
+            )
 
     @allure.step('Получаю текст allert')
     def get_alert_message(self):

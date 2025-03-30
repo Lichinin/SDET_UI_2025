@@ -47,7 +47,10 @@ class TestManagerPage:
         customer_to_delete = DataHelper.choice_name_to_delete(
             manager_page.actual_customers_name
         )
-        manager_page.click_delete_button(customer_to_delete)
+        manager_page.fill_search_field(customer_to_delete)
+        
+        manager_page.click_delete_button()
+        manager_page.clear_search_field()
         manager_page.get_customers_name()
         with allure.step('Проверка отсутствия удаленного Customer в списке'):
             assert customer_to_delete not in manager_page.actual_customers_name

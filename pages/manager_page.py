@@ -25,8 +25,8 @@ class ManagerPage(BasePage):
     )
     CUSTOMER_NAME = (By.CSS_SELECTOR, 'tr.ng-scope td:nth-child(1)')
     BUTTON_DELETE_CUSTOMER = (
-        By.XPATH,
-        '//tr[contains(@class, "ng-scope") and .//td[text()="{name}"]]//button[text()="Delete"]'
+        By.CSS_SELECTOR,
+        'button[ng-click="deleteCust(cust)"]'
     )
 
     @allure.step('Нажать кнопку "Add Customer" в меню')
@@ -70,14 +70,15 @@ class ManagerPage(BasePage):
         self.sorted_customer_name = sorted(self.actual_customers_name)
 
     @allure.step('Нажать кнопку "Delete"')
-    def click_delete_button(self, name_to_delete):
-        locator = (
-            self.BUTTON_DELETE_CUSTOMER[0],
-            self.BUTTON_DELETE_CUSTOMER[1].format(name=name_to_delete)
-        )
-        self.get_element(locator).click()
+    def click_delete_button(self):
+        self.get_element(self.BUTTON_DELETE_CUSTOMER).click()
 
     @allure.step('Заполнить поле "Search"')
     def fill_search_field(self, name):
         field = self.get_element(self.FIELD_SEARCH_CUSTOMER)
         field.send_keys(name)
+
+    @allure.step('Заполнить поле "Search"')
+    def clear_search_field(self):
+        field = self.get_element(self.FIELD_SEARCH_CUSTOMER)
+        field.clear()

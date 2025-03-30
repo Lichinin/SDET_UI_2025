@@ -1,7 +1,6 @@
 import allure
 from selenium.webdriver.common.by import By
 
-from helpers.data_helper import DataHelper
 from pages.base_page import BasePage
 
 
@@ -33,20 +32,10 @@ class ManagerPage(BasePage):
     def click_add_customer_menu_button(self):
         self.get_element(self.BUTTON_MENU_ADD_CUSTOMER).click()
 
-    @allure.step('Заполнить поле "First Name"')
-    def fill_first_name_field(self, first_name):
-        field = self.get_element(self.FIELD_FIRST_NAME)
-        field.send_keys(first_name)
-
-    @allure.step('Заполнить поле "Last Name"')
-    def fill_last_name_field(self, last_name):
-        field = self.get_element(self.FIELD_LAST_NAME)
-        field.send_keys(last_name)
-
-    @allure.step('Заполнить поле "Post Code"')
-    def fill_post_code_field(self, code):
-        field = self.get_element(self.FIELD_POST_CODE)
-        field.send_keys(code)
+    @allure.step('Заполнить поле по локатору: {locator[1]}')
+    def fill_form(self, locator, value):
+        field = self.get_element(locator)
+        field.send_keys(value)
 
     @allure.step('Нажать кнопку "Add Customer" под формой')
     def click_add_customer_submit_button(self):
@@ -72,11 +61,6 @@ class ManagerPage(BasePage):
     @allure.step('Нажать кнопку "Delete"')
     def click_delete_button(self):
         self.get_element(self.BUTTON_DELETE_CUSTOMER).click()
-
-    @allure.step('Заполнить поле "Search"')
-    def fill_search_field(self, name):
-        field = self.get_element(self.FIELD_SEARCH_CUSTOMER)
-        field.send_keys(name)
 
     @allure.step('Очистить поле "Search"')
     def clear_search_field(self):

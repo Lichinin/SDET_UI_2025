@@ -2,7 +2,6 @@ import datetime
 import logging
 import logging.handlers
 from logging.handlers import RotatingFileHandler
-from pathlib import Path
 
 import pytest
 from selenium import webdriver
@@ -11,9 +10,9 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from config import Pathes, Urls
 from helpers.data_helper import DataHelper
 from pages.manager_page import ManagerPage
-from config import Urls, Pathes
 
 
 def pytest_addoption(parser):
@@ -107,5 +106,8 @@ def customer_data(manager_page):
     alert = manager_page.browser.switch_to.alert
     alert.accept()
     manager_page.click_customers_menu_button()
-    manager_page.fill_search_field(customer['first_name'])
+    manager_page.fill_form(
+        manager_page.FIELD_SEARCH_CUSTOMER,
+        customer['first_name']
+    )
     manager_page.click_delete_button()

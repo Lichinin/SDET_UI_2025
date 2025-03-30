@@ -2,6 +2,7 @@ import allure
 
 from constants.constants import Constants
 from helpers.data_helper import DataHelper
+from pages.manager_page import ManagerPage
 
 
 @allure.epic('SimbirSoft SDET practicum')
@@ -11,11 +12,20 @@ class TestManagerPage:
     @allure.description(
         'Проверка создания нового Customer и сообщения об успешном создании.'
     )
-    def test_customer_add(self, manager_page, customer_data):
+    def test_customer_add(self, manager_page: ManagerPage, customer_data):
         manager_page.click_add_customer_menu_button()
-        manager_page.fill_first_name_field(customer_data['first_name'])
-        manager_page.fill_last_name_field(customer_data['last_name'])
-        manager_page.fill_post_code_field(customer_data['code'])
+        manager_page.fill_form(
+            manager_page.FIELD_FIRST_NAME,
+            customer_data['first_name']
+        )
+        manager_page.fill_form(
+            manager_page.FIELD_LAST_NAME,
+            customer_data['first_name']
+        )
+        manager_page.fill_form(
+            manager_page.FIELD_POST_CODE,
+            customer_data['first_name']
+        )
         manager_page.click_add_customer_submit_button()
         with allure.step('Проверка сообщения о создании пользователя'):
             assert (
@@ -28,7 +38,7 @@ class TestManagerPage:
     @allure.description(
         'Сортировка Customers по First_Name и проверка корректности сортировки'
     )
-    def test_customers_sort_by_name(self, manager_page):
+    def test_customers_sort_by_name(self, manager_page: ManagerPage):
         manager_page.click_customers_menu_button()
         manager_page.click_twice_first_name_column()
         manager_page.get_customers_name()
@@ -42,13 +52,16 @@ class TestManagerPage:
     @allure.description(
         'Удаление Customer и проверка его отсутствия в списке Customers.'
     )
-    def test_customer_delete(self, manager_page):
+    def test_customer_delete(self, manager_page: ManagerPage):
         manager_page.click_customers_menu_button()
         manager_page.get_customers_name()
         customer_to_delete = DataHelper.choice_name_to_delete(
             manager_page.actual_customers_name
         )
-        manager_page.fill_search_field(customer_to_delete)
+        manager_page.fill_form(
+            manager_page.FIELD_SEARCH_CUSTOMER,
+            customer_to_delete
+        )
         manager_page.click_delete_button()
         manager_page.clear_search_field()
         manager_page.get_customers_name()

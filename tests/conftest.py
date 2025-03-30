@@ -13,7 +13,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from helpers.data_helper import DataHelper
 from pages.manager_page import ManagerPage
-from config import Urls
+from config import Urls, Pathes
 
 
 def pytest_addoption(parser):
@@ -25,7 +25,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope='function')
 def logger(request):
-    log_dir = Path(__file__).parent.parent / 'log'
+    log_dir = Pathes.LOG_DIR
     log_dir.mkdir(exist_ok=True)
     log_level = request.config.getoption('--log_level')
     browser_name = request.config.getoption('--browser')

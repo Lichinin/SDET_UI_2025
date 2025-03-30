@@ -53,10 +53,9 @@ class ManagerPage(BasePage):
     @allure.step('Получить имена всех Customers')
     def get_customers_name(self):
         customers_name_elements = self.get_elements(self.CUSTOMER_NAME)
-        self.actual_customers_name = [
+        return [
             element.text for element in customers_name_elements
         ]
-        self.sorted_customer_name = sorted(self.actual_customers_name)
 
     @allure.step('Нажать кнопку "Delete"')
     def click_delete_button(self):

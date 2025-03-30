@@ -41,11 +41,11 @@ class TestManagerPage:
     def test_customers_sort_by_name(self, manager_page: ManagerPage):
         manager_page.click_customers_menu_button()
         manager_page.click_twice_first_name_column()
-        manager_page.get_customers_name()
         with allure.step('Проверка сортировки списка Customer'):
+            actual_customers_name = manager_page.get_customers_name()
             assert (
-                manager_page.actual_customers_name
-                == manager_page.sorted_customer_name
+                actual_customers_name
+                == sorted(actual_customers_name)
             )
 
     @allure.title('Тест удаления Customer')

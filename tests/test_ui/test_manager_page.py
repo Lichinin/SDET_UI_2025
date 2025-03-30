@@ -20,11 +20,11 @@ class TestManagerPage:
         )
         manager_page.fill_form(
             manager_page.FIELD_LAST_NAME,
-            customer_data['first_name']
+            customer_data['last_name']
         )
         manager_page.fill_form(
             manager_page.FIELD_POST_CODE,
-            customer_data['first_name']
+            customer_data['code']
         )
         manager_page.click_add_customer_submit_button()
         with allure.step('Проверка сообщения о создании пользователя'):

@@ -78,7 +78,7 @@ class ManagerPage(BasePage):
         field = self.get_element(self.FIELD_SEARCH_CUSTOMER)
         field.send_keys(name)
 
-    @allure.step('Заполнить поле "Search"')
+    @allure.step('Очистить поле "Search"')
     def clear_search_field(self):
         field = self.get_element(self.FIELD_SEARCH_CUSTOMER)
         field.clear()

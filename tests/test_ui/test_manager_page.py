@@ -48,7 +48,7 @@ class TestManagerPage:
             manager_page.actual_customers_name
         )
         manager_page.fill_search_field(customer_to_delete)
-        
+
         manager_page.click_delete_button()
         manager_page.clear_search_field()
         manager_page.get_customers_name()

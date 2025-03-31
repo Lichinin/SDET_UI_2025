@@ -7,7 +7,6 @@ class Timeouts:
 
 class Urls:
     BASE_URL = 'https://www.globalsqa.com'
-    MANAGER_ENDPOINT_URL = '/angularJs-protractor/BankingProject/#/manager'
 
 
 class Pathes:

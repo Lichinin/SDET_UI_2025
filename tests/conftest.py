@@ -6,6 +6,7 @@ from logging.handlers import RotatingFileHandler
 import allure
 import pytest
 from selenium import webdriver
+from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -64,7 +65,7 @@ def browser(request, logger) -> WebDriver:
     elif browser_name == 'firefox':
         options = FirefoxOptions()
         options.add_argument('--ignore-certificate-errors')
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         options.page_load_strategy = 'eager'
         driver = webdriver.Firefox(options=options)
     elif browser_name == 'edge':
@@ -121,6 +122,11 @@ def pytest_runtest_makereport(item, call):
     if report.when == "call" and report.failed:
         browser = item.funcargs.get('browser')
         if browser:
+            try:
+                alert = browser.switch_to.alert
+                alert.accept()
+            except NoAlertPresentException:
+                pass
             allure.attach(
                 browser.get_screenshot_as_png(),
                 name="screenshot_on_failure",

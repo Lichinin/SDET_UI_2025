@@ -6,7 +6,7 @@ from pages.base_page import BasePage
 
 class ManagerPage(BasePage):
 
-    MANAGER_ENDPOINT_URL = '/angularJs-protractor/BankingProject/#/manager'
+    ENDPOINT_URL = '/angularJs-protractor/BankingProject/#/manager'
 
     BUTTON_MENU_ADD_CUSTOMER = (
         By.CSS_SELECTOR, 'button[ng-click="addCust()"]'

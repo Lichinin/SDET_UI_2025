@@ -87,7 +87,7 @@ def browser(request, logger) -> WebDriver:
 
 @pytest.fixture()
 def manager_page(browser) -> ManagerPage:
-    browser.get(f'{browser.url}{ManagerPage.MANAGER_ENDPOINT_URL}')
+    browser.get(ManagerPage.get_full_url())
     return ManagerPage(browser)
 
 

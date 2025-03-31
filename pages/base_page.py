@@ -40,7 +40,7 @@ class BasePage:
     @allure.step('Получаю текст allert')
     def get_alert_message(self):
         alert = self.browser.switch_to.alert
-        return alert.text if alert.text else None
+        return alert.text if alert.text else ''
 
     @classmethod
     def get_full_url(cls):

@@ -105,8 +105,11 @@ def customer_data(manager_page):
 
     yield customer
 
-    alert = manager_page.browser.switch_to.alert
-    alert.accept()
+    try:
+        alert = manager_page.browser.switch_to.alert
+        alert.accept()
+    except NoAlertPresentException:
+        pass
     manager_page.click_customers_menu_button()
     manager_page.fill_form({
         manager_page.FIELD_SEARCH_CUSTOMER: customer['first_name']
@@ -124,7 +127,13 @@ def pytest_runtest_makereport(item, call):
         if browser:
             try:
                 alert = browser.switch_to.alert
+                alert_text = alert.text
                 alert.accept()
+                allure.attach(
+                    alert_text,
+                    name='alert_text',
+                    attachment_type=allure.attachment_type.TEXT
+                )
             except NoAlertPresentException:
                 pass
             allure.attach(

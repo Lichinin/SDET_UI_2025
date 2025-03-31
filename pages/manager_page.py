@@ -37,7 +37,9 @@ class ManagerPage(BasePage):
     @allure.step('Заполнить поля формы')
     def fill_form(self, locator_and_values: dict):
         for locator, value in locator_and_values.items():
-            with allure.step(f'Заполнить поле {locator[1]} значением "{value}"'):
+            with allure.step(
+                f'Заполнить поле {locator[1]} значением "{value}"'
+            ):
                 field = self.get_element(locator)
                 field.send_keys(value)
 

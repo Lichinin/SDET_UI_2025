@@ -17,7 +17,7 @@ from pages.manager_page import ManagerPage
 
 
 def pytest_addoption(parser):
-    parser.addoption('--browser', action='store', default='chrome')
+    parser.addoption('--browser', action='store', default='firefox')
     parser.addoption('--url', action='store', default=Urls.BASE_URL)
     parser.addoption('--log_level', action='store', default="INFO")
     parser.addoption('--browser_version', action='store')
@@ -107,10 +107,9 @@ def customer_data(manager_page):
     alert = manager_page.browser.switch_to.alert
     alert.accept()
     manager_page.click_customers_menu_button()
-    manager_page.fill_form(
-        manager_page.FIELD_SEARCH_CUSTOMER,
-        customer['first_name']
-    )
+    manager_page.fill_form({
+        manager_page.FIELD_SEARCH_CUSTOMER: customer['first_name']
+    })
     manager_page.click_delete_button()
 
 

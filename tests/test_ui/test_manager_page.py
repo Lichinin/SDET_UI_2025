@@ -14,18 +14,11 @@ class TestManagerPage:
     )
     def test_customer_add(self, manager_page: ManagerPage, customer_data):
         manager_page.click_add_customer_menu_button()
-        manager_page.fill_form(
-            manager_page.FIELD_FIRST_NAME,
-            customer_data['first_name']
-        )
-        manager_page.fill_form(
-            manager_page.FIELD_LAST_NAME,
-            customer_data['last_name']
-        )
-        manager_page.fill_form(
-            manager_page.FIELD_POST_CODE,
-            customer_data['code']
-        )
+        manager_page.fill_form({
+            manager_page.FIELD_FIRST_NAME: customer_data['first_name'],
+            manager_page.FIELD_LAST_NAME: customer_data['last_name'],
+            manager_page.FIELD_POST_CODE: customer_data['code']
+        })
         manager_page.click_add_customer_submit_button()
         with allure.step('Проверить сообщение о создании пользователя'):
             assert (
@@ -57,10 +50,9 @@ class TestManagerPage:
         customer_to_delete = DataHelper.choice_name_to_delete(
             manager_page.get_customers_name()
         )
-        manager_page.fill_form(
-            manager_page.FIELD_SEARCH_CUSTOMER,
-            customer_to_delete
-        )
+        manager_page.fill_form({
+            manager_page.FIELD_SEARCH_CUSTOMER: customer_to_delete
+        })
         manager_page.click_delete_button()
         manager_page.clear_search_field()
         with allure.step('Проверить отсутствие удаленного Customer в списке'):

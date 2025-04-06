@@ -6,6 +6,7 @@ from logging.handlers import RotatingFileHandler
 import allure
 import pytest
 from selenium import webdriver
+from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -17,7 +18,7 @@ from pages.manager_page import ManagerPage
 
 
 def pytest_addoption(parser):
-    parser.addoption('--browser', action='store', default='chrome')
+    parser.addoption('--browser', action='store', default='firefox')
     parser.addoption('--url', action='store', default=Urls.BASE_URL)
     parser.addoption('--log_level', action='store', default="INFO")
     parser.addoption('--browser_version', action='store')
@@ -87,7 +88,7 @@ def browser(request, logger) -> WebDriver:
 
 @pytest.fixture()
 def manager_page(browser) -> ManagerPage:
-    browser.get(f'{browser.url}{Urls.MANAGER_ENDPOINT_URL}')
+    browser.get(ManagerPage.get_full_url())
     return ManagerPage(browser)
 
 
@@ -104,13 +105,15 @@ def customer_data(manager_page):
 
     yield customer
 
-    alert = manager_page.browser.switch_to.alert
-    alert.accept()
+    try:
+        alert = manager_page.browser.switch_to.alert
+        alert.accept()
+    except NoAlertPresentException:
+        pass
     manager_page.click_customers_menu_button()
-    manager_page.fill_form(
-        manager_page.FIELD_SEARCH_CUSTOMER,
-        customer['first_name']
-    )
+    manager_page.fill_form({
+        manager_page.FIELD_SEARCH_CUSTOMER: customer['first_name']
+    })
     manager_page.click_delete_button()
 
 
@@ -122,6 +125,17 @@ def pytest_runtest_makereport(item, call):
     if report.when == "call" and report.failed:
         browser = item.funcargs.get('browser')
         if browser:
+            try:
+                alert = browser.switch_to.alert
+                alert_text = alert.text
+                alert.accept()
+                allure.attach(
+                    alert_text,
+                    name='alert_text',
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            except NoAlertPresentException:
+                pass
             allure.attach(
                 browser.get_screenshot_as_png(),
                 name="screenshot_on_failure",

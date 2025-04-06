@@ -2,7 +2,7 @@ import allure
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from config import Timeouts
+from config import Timeouts, Urls
 
 
 class BasePage:
@@ -40,4 +40,8 @@ class BasePage:
     @allure.step('Получить текст allert')
     def get_alert_message(self):
         alert = self.browser.switch_to.alert
-        return alert.text if alert.text else None
+        return alert.text if alert.text else ''
+
+    @classmethod
+    def get_full_url(cls):
+        return f'{Urls.BASE_URL}{cls.ENDPOINT_URL}'

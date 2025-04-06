@@ -6,6 +6,8 @@ from pages.base_page import BasePage
 
 class ManagerPage(BasePage):
 
+    ENDPOINT_URL = '/angularJs-protractor/BankingProject/#/manager'
+
     BUTTON_MENU_ADD_CUSTOMER = (
         By.CSS_SELECTOR, 'button[ng-click="addCust()"]'
     )
@@ -32,10 +34,14 @@ class ManagerPage(BasePage):
     def click_add_customer_menu_button(self):
         self.get_element(self.BUTTON_MENU_ADD_CUSTOMER).click()
 
-    @allure.step('Заполнить поле по локатору: {locator[1]}')
-    def fill_form(self, locator, value):
-        field = self.get_element(locator)
-        field.send_keys(value)
+    @allure.step('Заполнить поля формы')
+    def fill_form(self, locator_and_values: dict):
+        for locator, value in locator_and_values.items():
+            with allure.step(
+                f'Заполнить поле {locator[1]} значением "{value}"'
+            ):
+                field = self.get_element(locator)
+                field.send_keys(value)
 
     @allure.step('Нажать кнопку "Add Customer" под формой')
     def click_add_customer_submit_button(self):

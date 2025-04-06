@@ -11,33 +11,33 @@ class BasePage:
         self.browser = browser
         self.logger = browser.logger
 
-    @allure.step('Поиск элемента на странице')
+    @allure.step('Найти элемент на странице')
     def get_element(
         self,
         locator: tuple,
         timeout=Timeouts.ELEMENT_VISIBILITY
     ):
-        with allure.step(f'Поиск элемента "{locator}"'):
+        with allure.step(f'Найти элемент "{locator}"'):
             self.browser.logger.info(f'* Get element "{repr(locator)}"')
             return WebDriverWait(self.browser, timeout).until(
                 EC.visibility_of_element_located(locator),
                 message='Не удалось найти {locator} за {timeout} секунд'
             )
 
-    @allure.step('Поиск нескольких элементов на странице')
+    @allure.step('Найти несколько элементов на странице')
     def get_elements(
         self,
         locator: tuple,
         timeout=Timeouts.ELEMENT_VISIBILITY
     ):
-        with allure.step(f'Поиск элементов "{locator}"'):
+        with allure.step(f'Найти элемент "{locator}"'):
             self.browser.logger.info(f'* Get elements {repr(locator)}')
             return WebDriverWait(self.browser, timeout).until(
                 EC.visibility_of_all_elements_located(locator),
                 message='Не удалось найти {locator} за {timeout} секунд'
             )
 
-    @allure.step('Получаю текст allert')
+    @allure.step('Получить текст allert')
     def get_alert_message(self):
         alert = self.browser.switch_to.alert
         return alert.text if alert.text else None

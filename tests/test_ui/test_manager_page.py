@@ -27,7 +27,7 @@ class TestManagerPage:
             customer_data['code']
         )
         manager_page.click_add_customer_submit_button()
-        with allure.step('Проверка сообщения о создании пользователя'):
+        with allure.step('Проверить сообщение о создании пользователя'):
             assert (
                 manager_page.get_alert_message().startswith(
                     Constants.EXPECTED_CUSTOMER_ADD_MESSAGE
@@ -41,7 +41,7 @@ class TestManagerPage:
     def test_customers_sort_by_name(self, manager_page: ManagerPage):
         manager_page.click_customers_menu_button()
         manager_page.click_twice_first_name_column()
-        with allure.step('Проверка сортировки списка Customer'):
+        with allure.step('Проверить сортировку списка Customer'):
             actual_customers_name = manager_page.get_customers_name()
             assert (
                 actual_customers_name
@@ -63,5 +63,5 @@ class TestManagerPage:
         )
         manager_page.click_delete_button()
         manager_page.clear_search_field()
-        with allure.step('Проверка отсутствия удаленного Customer в списке'):
+        with allure.step('Проверить отсутствие удаленного Customer в списке'):
             assert customer_to_delete not in manager_page.get_customers_name()

@@ -16,13 +16,9 @@ class DataHelper:
     @allure.step('Сгенерировать First_Name на основе Post_Code')
     def generate_first_name(code):
         pairs = [int(str(code)[i:i+2]) for i in range(0, len(str(code)), 2)]
-        result = []
-        for number in pairs:
-            letter_index = number % len(string.ascii_lowercase)
-            letter = string.ascii_lowercase[letter_index]
-            result.append(letter)
-
-        return ''.join(result)
+        return ''.join(
+            string.ascii_lowercase[number % len(string.ascii_lowercase)] for number in pairs
+        )
 
     @staticmethod
     @allure.step('Сгенерировать last_name')

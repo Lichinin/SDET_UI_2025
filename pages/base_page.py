@@ -6,6 +6,7 @@ from config import Timeouts, Urls
 
 
 class BasePage:
+    ENDPOINT_URL = ''
 
     def __init__(self, browser):
         self.browser = browser

@@ -1,0 +1,143 @@
+import datetime
+import logging
+import logging.handlers
+from logging.handlers import RotatingFileHandler
+
+import allure
+import pytest
+from selenium import webdriver
+from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.remote.webdriver import WebDriver
+
+from config import Pathes, Urls
+from helpers.data_helper import DataHelper
+from pages.manager_page import ManagerPage
+
+
+def pytest_addoption(parser):
+    parser.addoption('--browser', action='store', default='chrome')
+    parser.addoption('--url', action='store', default=Urls.BASE_URL)
+    parser.addoption('--log_level', action='store', default="INFO")
+    parser.addoption('--browser_version', action='store')
+
+
+@pytest.fixture(scope='function')
+def logger(request):
+    log_dir = Pathes.LOG_DIR
+    log_dir.mkdir(exist_ok=True)
+    log_level = request.config.getoption('--log_level')
+    browser_name = request.config.getoption('--browser')
+    logger = logging.getLogger(request.node.name)
+    file_handler = RotatingFileHandler(
+        str(log_dir / f'{request.node.name}({browser_name}).log'),
+        maxBytes=30000000,
+        backupCount=3)
+    file_handler.setFormatter(logging.Formatter('%(levelname)s %(message)s'))
+    logger.addHandler(file_handler)
+    logger.setLevel(level=log_level)
+
+    logger.info('===> Test %s started at %s' % (request.node.name, datetime.datetime.now()))
+
+    yield logger
+
+    logger.info('===> Test %s finished at %s' % (request.node.name, datetime.datetime.now()))
+
+    for handler in logger.handlers:
+        handler.close()
+    logger.handlers.clear()
+
+
+@pytest.fixture()
+def browser(request, logger) -> WebDriver:
+    browser_name = request.config.getoption('--browser')
+    browser_version = request.config.getoption('--browser_version')
+    url = request.config.getoption('--url')
+
+    if browser_name == 'chrome':
+        options = ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--ignore-certificate-errors')
+        options.page_load_strategy = 'eager'
+        driver = webdriver.Chrome(options=options)
+    elif browser_name == 'firefox':
+        options = FirefoxOptions()
+        options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--headless')
+        options.page_load_strategy = 'eager'
+        driver = webdriver.Firefox(options=options)
+    elif browser_name == 'edge':
+        options = EdgeOptions()
+        options.page_load_strategy = 'eager'
+        driver = webdriver.Edge(options=options)
+    else:
+        raise ValueError(
+            'Browser name must be "chrome", "firefox" or "edge"'
+        )
+    driver.url = url
+    driver.logger = logger
+    driver.test_name = request.node.name
+
+    logger.info("Browser %s v. %s started" % (browser_name, browser_version))
+
+    yield driver
+    driver.quit()
+
+
+@pytest.fixture()
+def manager_page(browser) -> ManagerPage:
+    browser.get(ManagerPage.get_full_url())
+    return ManagerPage(browser)
+
+
+@pytest.fixture()
+def customer_data(manager_page):
+    code = DataHelper.generate_post_code()
+    first_name = DataHelper.generate_first_name(code)
+    last_name = DataHelper.generate_last_name()
+    customer = {
+        'code': code,
+        'first_name': first_name,
+        'last_name': last_name
+    }
+
+    yield customer
+
+    try:
+        alert = manager_page.browser.switch_to.alert
+        alert.accept()
+    except NoAlertPresentException:
+        pass
+    manager_page.click_customers_menu_button()
+    manager_page.fill_form({
+        manager_page.FIELD_SEARCH_CUSTOMER: customer['first_name']
+    })
+    manager_page.click_delete_button()
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == "call" and report.failed:
+        browser = item.funcargs.get('browser')
+        if browser:
+            try:
+                alert = browser.switch_to.alert
+                alert_text = alert.text
+                alert.accept()
+                allure.attach(
+                    alert_text,
+                    name='alert_text',
+                    attachment_type=allure.attachment_type.TEXT
+                )
+            except NoAlertPresentException:
+                pass
+            allure.attach(
+                browser.get_screenshot_as_png(),
+                name="screenshot_on_failure",
+                attachment_type=allure.attachment_type.PNG
+            )
